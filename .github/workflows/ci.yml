@@ -2,7 +2,6 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
     branches-ignore: [gh-pages]
   pull_request:
     branches: [main, develop]
