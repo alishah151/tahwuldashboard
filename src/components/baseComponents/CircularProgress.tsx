@@ -38,7 +38,7 @@ const CircularProgress: React.FC<CircularProgressProps> = ({
                         dataKey="value"
                         stroke="none"
                     >
-                        {data.map((entry, index) => (
+                        {data.map((_, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index]} />
                         ))}
                     </Pie>
