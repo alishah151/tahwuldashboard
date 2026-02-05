@@ -6,6 +6,8 @@ import EvidenceTab from './tabs/EvidenceTab';
 import EvidenceMetric from './baseComponents/EvidenceMetric';
 import { perspectiveMetrics, evidenceTableData } from './data/perspectiveData';
 import { overviewData, perspectiveLeaders } from './data/perspectiveOverviewData';
+import RecentActivities from './widgets/RecentActivities';
+import CommentsSection from './widgets/CommentsSection';
 
 interface PerspectiveProps {
     onBack: () => void;
@@ -86,25 +88,37 @@ const Perspective: React.FC<PerspectiveProps> = ({ onBack }) => {
                 </div>
             </div>
 
-            {/* Leaders Section */}
-            <div className="bg-white rounded-lg p-6 py-4 border border-slate-100 shadow-sm text-left">
-                <h3 className="text-[#1D3557] text-lg font-bold mb-2">Leaders</h3>
-                <div className="flex gap-4">
-                    {perspectiveLeaders.map((leader, index) => (
-                        <div key={index} className="flex items-center gap-3 bg-gray-100 rounded-lg px-4 py-2">
-                            <img
-                                src={leader.avatar}
-                                alt={leader.name}
-                                className="w-12 h-12 rounded-full"
-                            />
-                            <div className="text-left">
-                                <p className="text-[#1D3557] font-semibold text-sm">{leader.name}</p>
-                                <p className="text-slate-500 text-xs">{leader.role}</p>
+            {activeSubTab === 'overview' ? (
+                /* Leaders Section */
+                <div className="bg-white rounded-lg p-6 py-4 border border-slate-100 shadow-sm text-left animate-in fade-in slide-in-from-bottom-2 duration-300">
+                    <h3 className="text-[#1D3557] text-lg font-bold mb-2">Leaders</h3>
+                    <div className="flex gap-4">
+                        {perspectiveLeaders.map((leader, index) => (
+                            <div key={index} className="flex items-center gap-3 bg-gray-100 rounded-lg px-4 py-2">
+                                <img
+                                    src={leader.avatar}
+                                    alt={leader.name}
+                                    className="w-12 h-12 rounded-full"
+                                />
+                                <div className="text-left">
+                                    <p className="text-[#1D3557] font-semibold text-sm">{leader.name}</p>
+                                    <p className="text-slate-500 text-xs">{leader.role}</p>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
-            </div>
+            ) : (
+                /* Evidence Bottom Section: Comments & Recent Activities */
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                    <div className="lg:col-span-2 h-full">
+                        <CommentsSection />
+                    </div>
+                    <div className="lg:col-span-1">
+                        <RecentActivities autoHeight={true} />
+                    </div>
+                </div>
+            )}
         </div >
     );
 };

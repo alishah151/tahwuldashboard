@@ -3,11 +3,15 @@ import React from 'react';
 import { activities } from '../data/recentActivitiesData';
 import type { Activity } from '../data/recentActivitiesData';
 
-const RecentActivities: React.FC = () => {
+interface RecentActivitiesProps {
+    autoHeight?: boolean;
+}
+
+const RecentActivities: React.FC<RecentActivitiesProps> = ({ autoHeight = false }) => {
     const activityData: Activity[] = activities;
 
     return (
-        <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 h-full">
+        <div className={`bg-white rounded-3xl p-6 shadow-sm border border-slate-100 ${autoHeight ? '' : 'h-full'}`}>
             <h3 className="text-black text-[18px] font-bold mb-6 text-left">Recent Activities</h3>
             <div className="divide-y divide-slate-100">
                 {activityData.map((activity, index) => (
