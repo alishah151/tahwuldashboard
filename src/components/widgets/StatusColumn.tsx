@@ -2,7 +2,7 @@ import StatusHeader from './StatusHeader';
 import StatusSegment from './StatusSegment';
 import type { StatusType } from './StatusSegment';
 
-interface SegmentData {
+export interface SegmentData {
     title?: string;
     items: { id: number; status: StatusType }[];
     align?: 'center' | 'bottom';

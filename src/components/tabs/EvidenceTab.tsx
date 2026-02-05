@@ -23,7 +23,7 @@ const EvidenceTab: React.FC<EvidenceTabProps> = ({ data }) => {
     const [sortConfig, setSortConfig] = useState<SortConfig>(null);
 
     const sortedData = React.useMemo(() => {
-        let sortableItems = [...data];
+        const sortableItems = [...data];
         if (sortConfig !== null) {
             sortableItems.sort((a, b) => {
                 const aValue = a[sortConfig.key];

@@ -1,5 +1,5 @@
 import React from 'react';
-import StatusColumn from './StatusColumn';
+import StatusColumn, { type SegmentData } from './StatusColumn';
 
 import { columns, legendItems } from '../data/progressStatusData';
 
@@ -25,7 +25,7 @@ const ProgressStatusSection: React.FC = () => {
                         key={index}
                         title={column.title}
                         percentage={column.percentage}
-                        segments={column.segments as any}
+                        segments={column.segments as SegmentData[]}
                     />
                 ))}
             </div>

@@ -39,15 +39,17 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ icon, label, active, collapse
     );
 };
 
+export type SidebarTab = 'dashboard' | 'perspective';
+
 interface SidebarProps {
-    activeTab: string;
-    onTabChange: (tab: any) => void;
+    activeTab: SidebarTab;
+    onTabChange: (tab: SidebarTab) => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
     const [isCollapsed, setIsCollapsed] = useState(false);
 
-    const menuItems = [
+    const menuItems: { id: SidebarTab; label: string; icon: React.ReactNode }[] = [
         { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
         { id: 'perspective', label: 'Perspective', icon: <Layers size={20} /> },
     ];
