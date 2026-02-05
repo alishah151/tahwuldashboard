@@ -37,6 +37,7 @@ const GaugeChart: React.FC<GaugeChartProps> = ({ score, color, height = 120, tex
                                     <Cell
                                         key={`cell-${index}`}
                                         fill={COLORS[index % COLORS.length]}
+                                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                         {...({ cornerRadius: index === 0 ? 10 : 0 } as any)}
                                     />
                                 ))}
