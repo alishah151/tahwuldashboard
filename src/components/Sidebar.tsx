@@ -47,7 +47,7 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
-    const [isCollapsed, setIsCollapsed] = useState(false);
+    const [isCollapsed, setIsCollapsed] = useState(true);
 
     const menuItems: { id: SidebarTab; label: string; icon: React.ReactNode }[] = [
         { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard size={20} /> },
@@ -94,7 +94,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
             {/* Collapse/Expand Button - Positioned on right border */}
             <button
                 onClick={() => setIsCollapsed(!isCollapsed)}
-                className="absolute bottom-20 -right-3 w-8 h-8 max-w-8 max-h-8 bg-white rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.15)] flex items-center justify-center hover:bg-gray-50 transition-all duration-300 z-50 border border-slate-100 cursor-pointer"
+                className="absolute bottom-20 -right-5 w-8 h-8 max-w-8 max-h-8 bg-white rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.15)] flex items-center justify-center hover:bg-gray-50 transition-all duration-300 z-50 border border-slate-100 cursor-pointer"
             >
                 <svg
                     width="20"

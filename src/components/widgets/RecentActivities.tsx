@@ -18,7 +18,7 @@ const RecentActivities: React.FC<RecentActivitiesProps> = ({ autoHeight = false 
                     <div key={index} className="flex items-center justify-between py-4 group">
                         <div className="flex items-center space-x-3">
                             <div className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
-                            <p className="text-black text-[13px] font-medium text-left">{activity.title}</p>
+                            <p className="text-black text-xs font-medium text-left">{activity.title}</p>
                         </div>
                         <div className="text-right shrink-0 ml-4">
                             <span className="text-gray-400 text-[11px] font-medium">{activity.time}</span>

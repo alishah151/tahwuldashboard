@@ -110,7 +110,7 @@ const Perspective: React.FC<PerspectiveProps> = ({ onBack }) => {
                 </div>
             ) : (
                 /* Evidence Bottom Section: Comments & Recent Activities */
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
                     <div className="lg:col-span-2 h-full">
                         <CommentsSection />
                     </div>

@@ -8,8 +8,8 @@ import { stats } from './data/statsData';
 const Dashboard: React.FC = () => {
 
     return (
-        <div className="w-full space-y-8 animate-in fade-in duration-500">
-            <div className="grid grid-cols-1 gap-8">
+        <div className="w-full space-y-4 animate-in fade-in duration-500">
+            <div className="grid grid-cols-1 gap-4">
                 <ProjectTimeline />
             </div>
 
