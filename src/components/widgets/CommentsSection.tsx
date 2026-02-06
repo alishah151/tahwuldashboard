@@ -9,7 +9,7 @@ interface Comment {
     initials: string;
 }
 
-const MUSLIM_NAMES = [
+const RANDOM_NAMES = [
     'Ahmed', 'Mohamed', 'Fatima', 'Aisha', 'Omar',
     'Youssef', 'Mariam', 'Hassan', 'Zainab', 'Bilal'
 ];
@@ -38,7 +38,7 @@ const CommentsSection: React.FC = () => {
     const handlePostComment = () => {
         if (!newComment.trim()) return;
 
-        const randomName = MUSLIM_NAMES[Math.floor(Math.random() * MUSLIM_NAMES.length)];
+        const randomName = RANDOM_NAMES[Math.floor(Math.random() * RANDOM_NAMES.length)];
         const newId = comments.length > 0 ? Math.max(...comments.map(c => c.id)) + 1 : 1;
 
         const commentToAdd: Comment = {
