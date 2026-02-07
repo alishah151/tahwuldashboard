@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import backIcon from '../../assets/back.svg';
 import logo from '../../assets/logo.png';
-import shortLogo from '../../assets/shortlogo.png';
 import SidebarItem from './SidebarItem';
 import { animationConfig } from '../../config/animations';
 
@@ -11,6 +10,8 @@ export type SidebarTab = 'dashboard' | 'perspective';
 interface SidebarProps {
     activeTab: SidebarTab;
     onTabChange: (tab: SidebarTab) => void;
+    isCollapsed: boolean;
+    onToggle: () => void;
 }
 
 // Icons as components
@@ -28,9 +29,7 @@ const PerspectiveIcon = () => (
     </svg>
 );
 
-const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
-    const [isCollapsed, setIsCollapsed] = useState(true);
-
+const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange, isCollapsed, onToggle }) => {
     const menuItems: { id: SidebarTab; label: string; icon: React.ReactNode }[] = [
         { id: 'dashboard', label: 'Dashboard', icon: <HomeIcon /> },
         { id: 'perspective', label: 'Perspectives', icon: <PerspectiveIcon /> },
@@ -48,11 +47,11 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
             {/* Logo Section */}
             <div
                 className={`
-        pl-[23px] pt-[10px] mb-5
-        overflow-hidden
-        transition-[width] duration-300 ease-in-out
-        ${isCollapsed ? 'ml-2 w-[40px]' : 'w-[160px]'}
-    `}
+                    pl-[23px] pt-[10px] mb-5
+                    overflow-hidden
+                    transition-[width] duration-300 ease-in-out
+                    ${isCollapsed ? 'ml-2 w-[40px]' : 'w-[160px]'}
+                `}
             >
                 <div className="flex-shrink-0 w-[100px] h-11">
                     <img
@@ -77,9 +76,9 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
                 ))}
             </div>
 
-            {/* Collapse/Expand Button - Positioned on right border */}
+            {/* Collapse/Expand Button */}
             <button
-                onClick={() => setIsCollapsed(!isCollapsed)}
+                onClick={onToggle}
                 className="absolute top-[19px] -right-4 w-8 h-8 max-w-8 max-h-8 p-0 bg-white rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.15)] flex items-center justify-center hover:bg-gray-50 transition-all duration-300 z-[101] border border-slate-100 cursor-pointer active:outline-none focus:outline-none"
             >
                 <img
@@ -88,7 +87,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
                     className={`transition-transform duration-300 shrink-0 block w-5 h-5 max-w-5 max-h-5 -ml-2 -mr-2 ${isCollapsed ? 'rotate-180' : ''}`}
                 />
             </button>
-        </motion.div >
+        </motion.div>
     );
 };
 

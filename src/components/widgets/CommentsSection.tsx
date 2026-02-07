@@ -1,33 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Send } from 'lucide-react';
 
-import { useMessageStore } from '../../store/useMessageStore';
-
-interface Comment {
-    id: number;
-    name: string;
-    text: string;
-    date: string;
-    initials: string;
-}
+import { useMessageStore, type Message } from '../../store/useMessageStore';
 
 const RANDOM_NAMES = [
     'Ahmed', 'Mohamed', 'Fatima', 'Aisha', 'Omar',
     'Youssef', 'Mariam', 'Hassan', 'Zainab', 'Bilal'
 ];
 
-const INITIAL_COMMENTS: Comment[] = [
+const INITIAL_COMMENTS: Message[] = [
     {
         id: 1,
         name: 'Sara Ibrahim',
-        text: 'Ensure The Plan Includes A Clear Governance Model.',
+        message: 'Ensure The Plan Includes A Clear Governance Model.',
         date: '2025-08-05',
         initials: 'S'
     },
     {
         id: 2,
         name: 'Mona Hamed',
-        text: 'Ensure The Plan Includes A Clear Governance Model.',
+        message: 'Ensure The Plan Includes A Clear Governance Model.',
         date: '2025-08-05',
         initials: 'M'
     }
@@ -35,10 +27,13 @@ const INITIAL_COMMENTS: Comment[] = [
 
 const CommentsSection: React.FC = () => {
 
-    const addMessage = useMessageStore((state: { addMessage: any; }) => state.addMessage);
+    const addMessage = useMessageStore(state => state.addMessage);
+    const messages = useMessageStore(state => state.data);
 
-    const messages = useMessageStore((state: { data: any; }) => state.data);
-    const [comments, setComments] = useState<Comment[]>(INITIAL_COMMENTS);
+    const [comments, setComments] = useState<Message[]>(() => {
+        // This function only runs on the initial render
+        return [...INITIAL_COMMENTS, ...messages]
+    });
     const [newComment, setNewComment] = useState('');
     const commentsEndRef = useRef<HTMLDivElement>(null);
 
@@ -48,10 +43,10 @@ const CommentsSection: React.FC = () => {
         const randomName = RANDOM_NAMES[Math.floor(Math.random() * RANDOM_NAMES.length)];
         const newId = comments.length > 0 ? Math.max(...comments.map(c => c.id)) + 1 : 1;
 
-        const commentToAdd: Comment = {
+        const commentToAdd: Message = {
             id: newId,
             name: randomName,
-            text: newComment,
+            message: newComment,
             date: new Date().toISOString().split('T')[0], // Current date YYYY-MM-DD
             initials: randomName.charAt(0)
         };
@@ -62,11 +57,6 @@ const CommentsSection: React.FC = () => {
     };
 
     useEffect(() => {
-        setComments([...comments, ...messages]);
-    }, []);
-
-    useEffect(() => {
-        console.log(commentsEndRef)
         setTimeout(() => {
             if (commentsEndRef.current) {
                 commentsEndRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -92,7 +82,7 @@ const CommentsSection: React.FC = () => {
                             <span className="text-slate-400 text-xs">{comment.date}</span>
                         </div>
                         <p className="text-slate-600 text-sm text-left pl-11">
-                            {comment.text}
+                            {comment.message}
                         </p>
                     </div>
                 ))}

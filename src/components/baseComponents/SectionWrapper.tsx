@@ -1,7 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useLayoutEffect, useState } from 'react';
 import { motion, AnimatePresence, easeOut } from 'framer-motion';
 import type { Variants } from 'framer-motion';
-
 
 interface SectionWrapperProps {
     children: React.ReactNode;
@@ -11,51 +10,46 @@ interface SectionWrapperProps {
 }
 
 const sectionVariants: Variants = {
-    initial: {
-        y: 50,
-        opacity: 0
-    },
+    initial: { y: 50, opacity: 0 },
     animate: (index: number) => ({
         y: 0,
         opacity: 1,
         transition: {
             duration: 0.5,
             ease: easeOut,
-            delay: 0.2 + index * 0.2
-        }
+            delay: 0.2 + index * 0.2,
+        },
     }),
     exit: {
         y: 50,
         opacity: 0,
-        transition: {
-            duration: 0.3,
-            ease: easeOut
-        }
-    }
+        transition: { duration: 0.3, ease: easeOut },
+    },
 };
 
 const SectionWrapper: React.FC<SectionWrapperProps> = ({
     children,
     searchQuery,
     index = 0,
-    className = ''
+    className = '',
 }) => {
     const contentRef = useRef<HTMLDivElement>(null);
     const [isVisible, setIsVisible] = useState(true);
 
-    useEffect(() => {
-        if (!searchQuery) {
-            setIsVisible(true);
-            return;
-        }
+    useLayoutEffect(() => {
+        if (!contentRef.current) return;
 
-        if (contentRef.current) {
-            const text = contentRef.current.textContent || '';
-            setIsVisible(
-                text.toLowerCase().includes(searchQuery.toLowerCase())
-            );
-        }
-    }, [searchQuery]);
+        const el = contentRef.current;
+
+        const timeout = setTimeout(() => {
+            const text = el.textContent || '';
+            const visible = !searchQuery || text.toLowerCase().includes(searchQuery.toLowerCase());
+            setIsVisible(prev => (prev === visible ? prev : visible));
+        });
+
+        return () => clearTimeout(timeout);
+    }, [searchQuery, children]);
+
 
     return (
         <AnimatePresence>
