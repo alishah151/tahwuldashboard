@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Send } from 'lucide-react';
+
+import { useMessageStore } from '../../store/useMessageStore';
 
 interface Comment {
     id: number;
@@ -32,8 +34,13 @@ const INITIAL_COMMENTS: Comment[] = [
 ];
 
 const CommentsSection: React.FC = () => {
+
+    const addMessage = useMessageStore((state: { addMessage: any; }) => state.addMessage);
+
+    const messages = useMessageStore((state: { data: any; }) => state.data);
     const [comments, setComments] = useState<Comment[]>(INITIAL_COMMENTS);
     const [newComment, setNewComment] = useState('');
+    const commentsEndRef = useRef<HTMLDivElement>(null);
 
     const handlePostComment = () => {
         if (!newComment.trim()) return;
@@ -48,10 +55,24 @@ const CommentsSection: React.FC = () => {
             date: new Date().toISOString().split('T')[0], // Current date YYYY-MM-DD
             initials: randomName.charAt(0)
         };
-
+        addMessage(commentToAdd);
         setComments([...comments, commentToAdd]);
+
         setNewComment('');
     };
+
+    useEffect(() => {
+        setComments([...comments, ...messages]);
+    }, []);
+
+    useEffect(() => {
+        console.log(commentsEndRef)
+        setTimeout(() => {
+            if (commentsEndRef.current) {
+                commentsEndRef.current.scrollIntoView({ behavior: 'smooth' });
+            }
+        }, 1000);
+    }, [comments]);
 
     return (
         <div className="bg-white rounded-lg p-6 border border-slate-100 shadow-sm h-full flex flex-col">
@@ -75,8 +96,8 @@ const CommentsSection: React.FC = () => {
                         </p>
                     </div>
                 ))}
+                <div ref={commentsEndRef} />
             </div>
-
             {/* Comment Input */}
             <div className="mt-auto">
                 <textarea

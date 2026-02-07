@@ -17,7 +17,7 @@ interface DashboardContentProps {
 const DashboardContent: React.FC<DashboardContentProps> = ({ searchQuery }) => {
     return (
         <div className="w-full space-y-4 animate-in fade-in duration-500 [&>*]:!mt-[24px]">
-            <SectionWrapper searchQuery={searchQuery}>
+            <SectionWrapper searchQuery={searchQuery} index={0}>
                 <div className="grid grid-cols-1 gap-4">
                     <ProjectTimeline />
                 </div>
@@ -31,7 +31,7 @@ const DashboardContent: React.FC<DashboardContentProps> = ({ searchQuery }) => {
                 or maybe grid items? If I wrap grid items, layout might break if not careful.
                 Let's wrap the whole stats section for now to be safe with grid layout. 
             */}
-            <SectionWrapper searchQuery={searchQuery}>
+            <SectionWrapper searchQuery={searchQuery} index={1}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
                     {stats.map((stat, index) => (
                         <div key={index} className="contents">
@@ -50,15 +50,15 @@ const DashboardContent: React.FC<DashboardContentProps> = ({ searchQuery }) => {
                 </div>
             </SectionWrapper>
 
-            <SectionWrapper searchQuery={searchQuery}>
+            <SectionWrapper searchQuery={searchQuery} index={2}>
                 <ProgressStatusSection />
             </SectionWrapper>
 
-            <SectionWrapper searchQuery={searchQuery}>
+            <SectionWrapper searchQuery={searchQuery} index={3}>
                 <PerformanceActivityRow />
             </SectionWrapper>
 
-            <SectionWrapper searchQuery={searchQuery}>
+            <SectionWrapper searchQuery={searchQuery} index={4}>
                 <AuditAnalyticsRow />
             </SectionWrapper>
         </div>

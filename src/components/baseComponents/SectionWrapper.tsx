@@ -1,12 +1,45 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { motion, AnimatePresence, easeOut } from 'framer-motion';
+import type { Variants } from 'framer-motion';
+
 
 interface SectionWrapperProps {
     children: React.ReactNode;
     searchQuery: string;
-    className?: string; // For additional styling if needed (e.g. "col-span-2")
+    index?: number;
+    className?: string;
 }
 
-const SectionWrapper: React.FC<SectionWrapperProps> = ({ children, searchQuery, className = '' }) => {
+const sectionVariants: Variants = {
+    initial: {
+        y: 50,
+        opacity: 0
+    },
+    animate: (index: number) => ({
+        y: 0,
+        opacity: 1,
+        transition: {
+            duration: 0.5,
+            ease: easeOut,
+            delay: 0.2 + index * 0.2
+        }
+    }),
+    exit: {
+        y: 50,
+        opacity: 0,
+        transition: {
+            duration: 0.3,
+            ease: easeOut
+        }
+    }
+};
+
+const SectionWrapper: React.FC<SectionWrapperProps> = ({
+    children,
+    searchQuery,
+    index = 0,
+    className = ''
+}) => {
     const contentRef = useRef<HTMLDivElement>(null);
     const [isVisible, setIsVisible] = useState(true);
 
@@ -17,33 +50,29 @@ const SectionWrapper: React.FC<SectionWrapperProps> = ({ children, searchQuery, 
         }
 
         if (contentRef.current) {
-            // Get all text content
             const text = contentRef.current.textContent || '';
-
-            // Normalize text to lowercase for case-insensitive match
-            // We use standard includes() which supports partial matching (substrings)
-            // e.g. "pro" matches "Progress"
-            const hasMatch = text.toLowerCase().includes(searchQuery.toLowerCase());
-
-            setIsVisible(hasMatch);
+            setIsVisible(
+                text.toLowerCase().includes(searchQuery.toLowerCase())
+            );
         }
-    }, [searchQuery]); // Run whenever searchQuery changes
+    }, [searchQuery]);
 
     return (
-        <div
-            className={`transition-all duration-500 ease-in-out overflow-hidden ${className}`}
-            style={{
-                marginTop: '0px',
-                maxHeight: isVisible ? '2000px' : '0px',
-                opacity: isVisible ? 1 : 0,
-                marginBottom: isVisible ? undefined : 0,
-                visibility: isVisible ? 'visible' : 'hidden' // Ensure it's hidden from screen readers/tab order if hidden
-            }}
-        >
-            <div ref={contentRef}>
-                {children}
-            </div>
-        </div>
+        <AnimatePresence>
+            {isVisible && (
+                <motion.div
+                    key={index}
+                    className={className}
+                    variants={sectionVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    custom={index}
+                >
+                    <div ref={contentRef}>{children}</div>
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
 };
 

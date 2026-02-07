@@ -8,7 +8,7 @@ interface PageHeaderProps {
 
 const PageHeader: React.FC<PageHeaderProps> = ({ title, onBack }) => {
     return (
-        <div className="flex items-center gap-4 mb-8">
+        <div className="flex items-center gap-6">
             <button
                 onClick={onBack}
                 className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-colors shadow-sm focus:outline-none"

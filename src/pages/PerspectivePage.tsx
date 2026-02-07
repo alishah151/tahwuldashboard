@@ -19,7 +19,7 @@ const PerspectivePage: React.FC<PerspectivePageProps> = ({ onBack, searchQuery =
     const [activeSubTab, setActiveSubTab] = useState<'overview' | 'evidence'>('overview');
 
     return (
-        <div className="space-y-4 animate-in fade-in duration-500 bg-gray-50 min-h-screen">
+        <div className="space-y-4 animate-in fade-in duration-500 bg-gray-50 min-h-screen [&>*]:!mt-[24px]">
             <SectionWrapper searchQuery={searchQuery} index={0}>
                 <PageHeader title="Digital Transformation Strategic Planning" onBack={onBack} />
             </SectionWrapper>

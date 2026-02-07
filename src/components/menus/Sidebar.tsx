@@ -46,14 +46,21 @@ const Sidebar: React.FC<SidebarProps> = ({ activeTab, onTabChange }) => {
             `}
         >
             {/* Logo Section */}
-            <div className={`pl-[23px] pt-[10px] mb-5 flex items-center ${isCollapsed ? 'justify-center !pl-0' : 'justify-start'}`}>
-                <img
-                    src={isCollapsed ? shortLogo : logo}
-                    alt="Tahwul"
-                    className={`transition-all duration-300 object-contain
-                        ${isCollapsed ? 'w-10 h-10' : 'w-[100px] h-11'}
-                    `}
-                />
+            <div
+                className={`
+        pl-[23px] pt-[10px] mb-5
+        overflow-hidden
+        transition-[width] duration-300 ease-in-out
+        ${isCollapsed ? 'ml-2 w-[40px]' : 'w-[160px]'}
+    `}
+            >
+                <div className="flex-shrink-0 w-[100px] h-11">
+                    <img
+                        src={logo}
+                        alt="Tahwul"
+                        className="block w-[100px] h-11 object-contain flex-shrink-0"
+                    />
+                </div>
             </div>
 
             {/* Menu Items */}
