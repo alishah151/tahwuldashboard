@@ -22,8 +22,6 @@ const statusColors: Record<StatusType, string> = {
 };
 
 const StatusSegment: React.FC<StatusSegmentProps> = ({ title, items, height, align = 'bottom' }) => {
-    const isDivisibleBy3 = items.length > 0 && items.length % 3 === 0;
-    const gridCols = isDivisibleBy3 ? 'grid-cols-3' : 'grid-cols-2';
     const alignClass = align === 'center' ? 'my-auto' : 'mt-auto';
 
     return (
@@ -32,15 +30,15 @@ const StatusSegment: React.FC<StatusSegmentProps> = ({ title, items, height, ali
             style={{ height: height || 'auto' }}
         >
             {title && (
-                <h4 className="text-[10px] font-bold text-slate-500 uppercase text-center mb-4 leading-tight">
+                <h4 className="text-[10px] font-semibold text-slate-500 uppercase text-center mb-4 leading-tight">
                     {title}
                 </h4>
             )}
-            <div className={`grid ${gridCols} gap-2 ${alignClass}`}>
+            <div className={`flex flex-wrap ${items.length % 3 ? 'gap-2' : 'gap-[3px]'} justify-center max-w-[96px] ${alignClass}`}>
                 {items.map((item) => (
                     <div
                         key={item.id}
-                        className={`${statusColors[item.status]} w-6 h-6 rounded-full flex items-center justify-center text-white text-[12px] font-extrabold shadow-sm hover:scale-105 transition-transform cursor-default`}
+                        className={`${statusColors[item.status]} w-6 h-6 rounded-full flex items-center justify-center text-white text-[8px] font-extrabold shadow-sm hover:scale-105 transition-transform cursor-default`}
                     >
                         {item.id}
                     </div>

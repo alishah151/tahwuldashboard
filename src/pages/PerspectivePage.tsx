@@ -1,0 +1,144 @@
+import React, { useState } from 'react';
+import PageHeader from '../components/baseComponents/PageHeader';
+import CircularChart from '../components/baseComponents/CircularChart';
+import OverviewTab from '../components/tabs/OverviewTab';
+import EvidenceTab from '../components/tabs/EvidenceTab';
+import EvidenceMetric from '../components/baseComponents/EvidenceMetric';
+import { perspectiveMetrics, evidenceTableData } from '../components/data/perspectiveData';
+import { overviewData, perspectiveLeaders } from '../components/data/perspectiveOverviewData';
+import RecentActivities from '../components/widgets/RecentActivities';
+import CommentsSection from '../components/widgets/CommentsSection';
+import SectionWrapper from '../components/baseComponents/SectionWrapper';
+
+interface PerspectivePageProps {
+    onBack: () => void;
+    searchQuery?: string;
+}
+
+const PerspectivePage: React.FC<PerspectivePageProps> = ({ onBack, searchQuery = '' }) => {
+    const [activeSubTab, setActiveSubTab] = useState<'overview' | 'evidence'>('overview');
+
+    return (
+        <div className="space-y-4 animate-in fade-in duration-500 bg-gray-50 min-h-screen">
+            <SectionWrapper searchQuery={searchQuery} index={0}>
+                <PageHeader title="Digital Transformation Strategic Planning" onBack={onBack} />
+            </SectionWrapper>
+
+            {/* Hero Section */}
+            <SectionWrapper searchQuery={searchQuery} index={1}>
+                <div className="p-4 bg-white border border-slate-100 rounded-lg">
+                    <div className="flex items-center justify-between gap-2 text-left">
+                        <div className="flex-1">
+                            {/* Tag */}
+                            <div className="inline-block bg-gray-50 text-gray-600 border-gray-200 border px-4 py-1.5 rounded-full text-xs font-semibold mb-2">
+                                Strategy & Planning
+                            </div>
+                            {/* Title */}
+                            <h2 className="text-[#1D3557] text-2xl font-bold mb-2">
+                                Digital Transformation Strategic Planning
+                            </h2>
+                            {/* Subtitle */}
+                            <p className="text-slate-600 text-sm leading-relaxed">
+                                Develop Comprehensive Strategic Plans For Digital Transformation Aligned With Organizational Goals
+                            </p>
+                        </div>
+                        {/* Circular Chart */}
+                        <div className="flex-shrink-0">
+                            <CircularChart percentage={100} size={80} strokeWidth={8} color="#10b981" />
+                        </div>
+                    </div>
+                </div>
+            </SectionWrapper>
+
+            {/* Evidence Metrics */}
+            <SectionWrapper searchQuery={searchQuery} index={2}>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {perspectiveMetrics.map((metric, index) => (
+                        <EvidenceMetric
+                            key={index}
+                            value={metric.value}
+                            label={metric.label}
+                            icon={metric.icon}
+                        />
+                    ))}
+                </div>
+            </SectionWrapper>
+
+            {/* Tabbed Section */}
+            <div className="">
+                <SectionWrapper searchQuery={searchQuery} index={3}>
+                    <div className="flex items-center gap-3 bg-gray-100 p-1 rounded-lg w-fit mb-4">
+                        <button
+                            onClick={() => setActiveSubTab('overview')}
+                            className={`px-8 py-2.5 text-sm font-semibold rounded-lg transition-all text-[#1D3557]  ${activeSubTab === 'overview'
+                                ? 'bg-white shadow-sm'
+                                : 'bg-transparent'
+                                }`}
+                        >
+                            Overview
+                        </button>
+                        <button
+                            onClick={() => setActiveSubTab('evidence')}
+                            className={`px-8 py-2.5 text-sm font-semibold rounded-lg transition-all text-[#1D3557] bg-transparent ${activeSubTab === 'evidence'
+                                ? 'bg-white shadow-sm'
+                                : 'bg-transparent'
+                                }`}
+                        >
+                            Evidence
+                        </button>
+                    </div>
+                </SectionWrapper>
+
+                <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+                    {activeSubTab === 'overview' ? (
+                        <SectionWrapper searchQuery={searchQuery} index={4}>
+                            <OverviewTab data={overviewData} />
+                        </SectionWrapper>
+                    ) : (
+                        <SectionWrapper searchQuery={searchQuery} index={4}>
+                            <EvidenceTab data={evidenceTableData} />
+                        </SectionWrapper>
+                    )}
+                </div>
+            </div>
+
+            {activeSubTab === 'overview' ? (
+                /* Leaders Section */
+                <SectionWrapper searchQuery={searchQuery} index={5}>
+                    <div className="bg-white rounded-lg p-6 py-4 border border-slate-100 shadow-sm text-left animate-in fade-in slide-in-from-bottom-2 duration-300">
+                        <h3 className="text-[#1D3557] text-lg font-bold mb-2">Leaders</h3>
+                        <div className="flex gap-4">
+                            {perspectiveLeaders.map((leader, index) => (
+                                <div key={index} className="flex items-center gap-3 bg-gray-100 rounded-lg px-4 py-2">
+                                    <img
+                                        src={leader.avatar}
+                                        alt={leader.name}
+                                        className="w-12 h-12 rounded-full"
+                                    />
+                                    <div className="text-left">
+                                        <p className="text-[#1D3557] font-semibold text-sm">{leader.name}</p>
+                                        <p className="text-slate-500 text-xs">{leader.role}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </SectionWrapper>
+            ) : (
+                /* Evidence Bottom Section: Comments & Recent Activities */
+                <SectionWrapper searchQuery={searchQuery} index={5}>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                        <div className="lg:col-span-2 h-full">
+                            <CommentsSection />
+                        </div>
+                        <div className="lg:col-span-1">
+                            <RecentActivities autoHeight={true} />
+                        </div>
+                    </div>
+                </SectionWrapper>
+            )}
+        </div >
+    );
+};
+
+export default PerspectivePage;

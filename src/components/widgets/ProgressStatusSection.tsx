@@ -6,7 +6,7 @@ import { columns, legendItems } from '../data/progressStatusData';
 const ProgressStatusSection: React.FC = () => {
 
     return (
-        <div className="w-full bg-white rounded-3xl p-8 shadow-sm border border-slate-100 mt-8 mb-12">
+        <div className="w-full bg-white rounded-3xl p-8 py-6 shadow-sm border border-slate-100">
             <div className="flex items-center justify-between mb-8">
                 <h2 className="text-[20px] font-bold text-black">Progress Status</h2>
                 <div className="flex items-center space-x-4 flex-wrap justify-end">
@@ -19,7 +19,7 @@ const ProgressStatusSection: React.FC = () => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 2xl:grid-cols-11 gap-4 overflow-x-auto pb-4">
+            <div className="flex gap-[15px] pb-4 flex-wrap">
                 {columns.map((column, index) => (
                     <StatusColumn
                         key={index}

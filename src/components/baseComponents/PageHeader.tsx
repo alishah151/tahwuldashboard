@@ -1,4 +1,5 @@
 import React from 'react';
+import backIcon from '../../assets/back.svg';
 
 interface PageHeaderProps {
     title: string;
@@ -14,21 +15,11 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, onBack }) => {
                 aria-label="Go back"
             >
 
-                <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#64748b"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    style={{ minWidth: '20px', minHeight: '20px' }}
-                    className={`transition-transform duration-300 shrink-0 block`}
-                >
-                    <path d="M3 19V5" />
-                    <path d="m13 6-6 6 6 6" />
-                </svg>
+                <img
+                    src={backIcon}
+                    alt="Back to Dashboard"
+                    className={`transition-transform duration-300 shrink-0 block w-5 h-5 max-w-5 max-h-5 -ml-2 -mr-2`}
+                />
             </button>
             <h1 className="text-2xl font-bold text-[#1D3557]">
                 {title}

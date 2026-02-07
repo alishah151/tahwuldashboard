@@ -16,17 +16,17 @@ interface StatusColumnProps {
 
 const StatusColumn: React.FC<StatusColumnProps> = ({ title, percentage, segments }) => {
     const getSegmentHeight = (count: number) => {
-        if (count === 1) return '342px';
-        if (count === 2) return '170px';
+        if (count === 1) return '340px';
+        if (count === 2) return '166px';
         if (count === 3) return '108px';
         return 'auto';
     };
 
     const segmentHeight = getSegmentHeight(segments.length);
-    const spacingClass = segments.length === 1 ? '' : segments.length === 2 ? 'space-y-[2px]' : 'space-y-[9px]';
+    const spacingClass = segments.length === 1 ? '' : 'space-y-2';
 
     return (
-        <div className="flex flex-col space-y-4 w-full h-full min-w-[96px]">
+        <div className="flex flex-col space-y-4 w-full h-full w-[96px] max-w-[96px] shrink-0 grow-0">
             <StatusHeader title={title} percentage={percentage} />
             <div className={`flex flex-col ${spacingClass} bg-slate-50/50 rounded-xl h-full`}>
                 {segments.map((segment, index) => (
